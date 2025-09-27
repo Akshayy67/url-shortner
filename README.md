@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# URL Shortener
+
+A modern, full-featured URL shortener built with Next.js, TypeScript, Tailwind CSS, and Supabase. Create short, memorable links with advanced analytics, custom aliases, QR codes, and expiration dates.
+
+## Features
+
+- ⚡ **Lightning Fast**: Instant URL shortening with optimized performance
+- 📊 **Analytics**: Track clicks, monitor performance, and gain insights
+- 🎯 **Custom Aliases**: Create branded, memorable short links
+- 📱 **QR Codes**: Generate QR codes for easy sharing
+- ⏰ **URL Expiration**: Set expiration dates for temporary links
+- 📋 **Copy to Clipboard**: One-click copying functionality
+- 🔒 **Secure**: Built with security best practices
+- 📱 **Responsive**: Works perfectly on desktop and mobile devices
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: Supabase (PostgreSQL)
+- **Icons**: Lucide React
+- **Notifications**: React Hot Toast
+- **QR Codes**: qrcode library
+- **ID Generation**: nanoid
 
 ## Getting Started
 
-First, run the development server:
+### 🚀 Quick Start (Demo Mode)
+
+Want to try it immediately? No setup required!
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) - the app works with demo data out of the box!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+ and npm
+- A Supabase account and project (for production use)
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone <repository-url>
+   cd url-shortener
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up Supabase**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   - Create a new project at [supabase.com](https://supabase.com)
+   - Go to Settings > API to get your project URL and API keys
+   - Copy the SQL schema from `supabase-schema.sql` and run it in the Supabase SQL editor
+
+4. **Configure environment variables**
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Edit `.env.local` with your Supabase credentials:
+
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+
+5. **Run the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Database Setup
+
+The application uses Supabase as the database. Run the SQL commands in `supabase-schema.sql` in your Supabase SQL editor to create the necessary tables and functions:
+
+- `urls` table: Stores URL mappings, analytics, and metadata
+- `clicks` table: Stores detailed click analytics
+- Functions for click counting and expiration checking
+- Row Level Security (RLS) policies for public access
+
+## API Endpoints
+
+- `POST /api/shorten` - Create a new shortened URL
+- `GET /api/urls` - Retrieve recent URLs with analytics
+- `GET /api/qr` - Generate QR code for a URL
+- `GET /[code]` - Redirect to original URL and track analytics
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/           # API routes
+│   ├── [code]/        # Dynamic redirect route
+│   ├── layout.tsx     # Root layout
+│   └── page.tsx       # Home page
+├── components/        # React components
+├── lib/              # Utility functions and database
+└── types/            # TypeScript type definitions
+```
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add your environment variables in Vercel dashboard
+4. Deploy!
+
+### Other Platforms
+
+The application can be deployed to any platform that supports Next.js:
+
+- Netlify
+- Railway
+- DigitalOcean App Platform
+- AWS Amplify
+
+Make sure to:
+
+- Set the correct environment variables
+- Update `NEXT_PUBLIC_APP_URL` to your production domain
+- Configure your Supabase project for production
+
+## Environment Variables
+
+| Variable                        | Description               | Required |
+| ------------------------------- | ------------------------- | -------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase project URL | Yes      |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key    | Yes      |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Supabase service role key | Yes      |
+| `NEXT_PUBLIC_APP_URL`           | Your application URL      | Yes      |
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Support
+
+If you encounter any issues or have questions, please open an issue on GitHub.
