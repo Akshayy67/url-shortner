@@ -43,7 +43,7 @@ export default function UrlList({ refreshTrigger }: UrlListProps) {
       } else {
         toast.error("Failed to load URLs");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to load URLs");
     } finally {
       setIsLoading(false);
@@ -73,7 +73,7 @@ export default function UrlList({ refreshTrigger }: UrlListProps) {
       } else {
         toast.error("Failed to generate QR code");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to generate QR code");
     }
   };
@@ -205,6 +205,7 @@ export default function UrlList({ refreshTrigger }: UrlListProps) {
                 <h4 className="text-sm font-medium text-gray-700 mb-2">
                   QR Code
                 </h4>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={qrCodes[url.id]}
                   alt="QR Code"

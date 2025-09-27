@@ -8,7 +8,7 @@ import {
 } from "./utils";
 
 // Mock data store for demo mode
-let mockUrls: Url[] = [
+const mockUrls: Url[] = [
   {
     id: "demo-1",
     original_url: "https://github.com/vercel/next.js",
@@ -46,7 +46,7 @@ let mockUrls: Url[] = [
     user_agent: null,
   },
 ];
-let mockClicks: any[] = [];
+const mockClicks: ClickInsert[] = [];
 let mockIdCounter = 4;
 
 export interface CreateUrlParams {
@@ -139,7 +139,7 @@ async function getUrlByCodeMock(code: string): Promise<Url | null> {
 
 async function recordClickMock(
   urlId: string,
-  clickData: any
+  clickData: Omit<ClickInsert, "url_id">
 ): Promise<boolean> {
   // Find and increment click count
   const url = mockUrls.find((u) => u.id === urlId);
@@ -358,6 +358,10 @@ export async function getRecentUrls(limit: number = 10): Promise<Url[]> {
  * Gets analytics data for a URL
  */
 export async function getUrlAnalytics(urlId: string) {
+  if (!isSupabaseConfigured || !supabase) {
+    return null;
+  }
+
   try {
     const { data: clicks, error } = await supabase
       .from("clicks")

@@ -120,7 +120,7 @@ export default function UrlShortenerForm({
       } else {
         toast.error("Failed to generate QR code");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to generate QR code");
     }
   };
@@ -319,6 +319,7 @@ export default function UrlShortenerForm({
                   <Download className="h-4 w-4" />
                 </button>
               </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrCode}
                 alt="QR Code"
